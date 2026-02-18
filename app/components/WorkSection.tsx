@@ -2,109 +2,121 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import CustomVideoPlayer from "./CustomVideoPlayer";
 import { useVideoHover } from "../contexts/VideoHoverContext";
 
 export default function WorkSection() {
   const [hoveredVideoId, setHoveredVideoId] = useState<number | null>(null);
   const [clickedVideoId, setClickedVideoId] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const { setVideoHovered } = useVideoHover();
 
   const videos = [
     {
       id: 1,
-      src: "/video/videoplayback.mp4",
+      src: "/video/video 1/videoplayback (1).mp4",
       title: "Project 1",
       client: "Client Name",
       description: "This project showcases innovative visual effects and motion graphics. The work involved complex 3D modeling, animation, and compositing techniques.",
       breakdown: [
-        { type: "video", src: "/video/videoplayback.mp4" },
-        { type: "image", src: "/image/flick.jpg" },
-        { type: "video", src: "/video/videoplayback (1).mp4" }
+        { type: "video", src: "/video/video 1/videoplayback (1).mp4" },
       ]
     },
     {
       id: 2,
-      src: "/video/videoplayback (1).mp4",
+      src: "/video/video 2/videoplayback (2).mp4",
       title: "Project 2",
       client: "Client Name",
       description: "A creative exploration of environment design and visual storytelling. This project pushed the boundaries of digital art and animation.",
       breakdown: [
-        { type: "video", src: "/video/videoplayback (1).mp4" },
-        { type: "image", src: "/image/flick.jpg" }
+        { type: "video", src: "/video/video 2/videoplayback (2).mp4" },
+        { type: "video", src: "/video/video 2/videoplayback breakdown (21).mp4" },
+        { type: "video", src: "/video/video 2/videoplayback breakdown (22).mp4" },
       ]
     },
     {
       id: 3,
-      src: "/video/videoplayback (2).mp4",
+      src: "/video/video 3/videoplayback (3).mp4",
       title: "Project 3",
       client: "Client Name",
       description: "Advanced compositing and visual effects work. This project demonstrates expertise in tracking, matchmoving, and seamless integration.",
       breakdown: [
-        { type: "video", src: "/video/videoplayback (2).mp4" },
-        { type: "image", src: "/image/flick.jpg" },
-        { type: "video", src: "/video/videoplayback (3).mp4" }
+        { type: "video", src: "/video/video 3/videoplayback (3).mp4" },
+        { type: "video", src: "/video/video 3/videoplayback breakdown (31).mp4" },
+        { type: "video", src: "/video/video 3/videoplayback breakdown (32).mp4" },
       ]
     },
     {
       id: 4,
-      src: "/video/videoplayback (3).mp4",
+      src: "/video/video 4/videoplayback (4).mp4",
       title: "Project 4",
       client: "Client Name",
       description: "Motion graphics and animation project featuring dynamic transitions and creative visual effects.",
       breakdown: [
-        { type: "video", src: "/video/videoplayback (3).mp4" },
-        { type: "image", src: "/image/flick.jpg" }
+        { type: "video", src: "/video/video 4/videoplayback (4).mp4" },
+        { type: "video", src: "/video/video 4/videoplayback breakdown (41).mp4" },
       ]
     },
     {
       id: 5,
-      src: "/video/videoplayback (4).mp4",
+      src: "/video/video 5/videoplayback (5).mp4",
       title: "Project 5",
       client: "Client Name",
       description: "3D modeling and environment design project showcasing detailed world-building and artistic vision.",
       breakdown: [
-        { type: "video", src: "/video/videoplayback (4).mp4" },
-        { type: "image", src: "/image/flick.jpg" },
-        { type: "video", src: "/video/videoplayback (5).mp4" }
+        { type: "video", src: "/video/video 5/videoplayback (5).mp4" },
+        { type: "video", src: "/video/video 5/videoplayback breakdown (51).mp4" },
       ]
     },
     {
       id: 6,
-      src: "/video/videoplayback (5).mp4",
+      src: "/video/video 6/videoplayback (6).mp4",
       title: "Project 6",
       client: "Client Name",
       description: "Visual effects and compositing work with focus on realistic integration and seamless blending.",
       breakdown: [
-        { type: "video", src: "/video/videoplayback (5).mp4" },
-        { type: "image", src: "/image/flick.jpg" }
+        { type: "video", src: "/video/video 6/videoplayback (6).mp4" },
+        { type: "video", src: "/video/video 6/videoplayback breakdown (62).mp4" },
+        { type: "video", src: "/video/video 6/videoplayback breakdown (61).mp4" },
       ]
     },
     {
       id: 7,
-      src: "/video/videoplayback (6).mp4",
+      src: "/video/video 7/videoplayback (7).mp4",
       title: "Project 7",
       client: "Client Name",
       description: "Creative animation project featuring character design and dynamic motion graphics.",
       breakdown: [
-        { type: "video", src: "/video/videoplayback (6).mp4" },
-        { type: "image", src: "/image/flick.jpg" },
-        { type: "video", src: "/video/videoplayback (7).mp4" }
+        { type: "video", src: "/video/video 7/videoplayback (7).mp4" },
       ]
     },
     {
       id: 8,
-      src: "/video/videoplayback (7).mp4",
+      src: "/video/video 8/videoplayback.mp4",
       title: "Project 8",
       client: "Client Name",
       description: "Advanced visual effects project showcasing technical expertise and creative problem-solving.",
       breakdown: [
-        { type: "video", src: "/video/videoplayback (7).mp4" },
-        { type: "image", src: "/image/flick.jpg" }
+        { type: "video", src: "/video/video 8/videoplayback.mp4" },
       ]
     }
   ];
 
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
+
   const handleVideoHover = (videoId: number | null) => {
+    if (isMobile) {
+      setHoveredVideoId(null);
+      setVideoHovered(false);
+      return;
+    }
     setHoveredVideoId(videoId);
     setVideoHovered(videoId !== null);
   };
@@ -119,7 +131,15 @@ export default function WorkSection() {
       });
     } else {
       videoRefs.current.forEach((ref) => {
-        if (ref) ref.play();
+        if (ref) {
+          const playPromise = ref.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(error => {
+              // Autoplay was prevented or interrupted.
+              // This is common and can be safely ignored.
+            });
+          }
+        }
       });
     }
   }, [hoveredVideoId]);
@@ -134,13 +154,42 @@ export default function WorkSection() {
     }
   }, [hoveredVideoId]);
 
+  const handleNextProject = () => {
+    if (clickedVideoId === null) return;
+    const currentIndex = videos.findIndex(v => v.id === clickedVideoId);
+    if (currentIndex > -1) {
+      const nextIndex = (currentIndex + 1) % videos.length;
+      setClickedVideoId(videos[nextIndex].id);
+    }
+  };
+
+  const handlePrevProject = () => {
+    if (clickedVideoId === null) return;
+    const currentIndex = videos.findIndex(v => v.id === clickedVideoId);
+    if (currentIndex > -1) {
+      const prevIndex = (currentIndex - 1 + videos.length) % videos.length;
+      setClickedVideoId(videos[prevIndex].id);
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (clickedVideoId === null) return;
+      if (e.key === 'ArrowRight') handleNextProject();
+      if (e.key === 'ArrowLeft') handlePrevProject();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [clickedVideoId]);
+
   return (
     <section
       id="work"
       className="min-h-screen flex items-center justify-center px-6 py-20 relative"
     >
       {/* Expanded video background - only visible when hovering */}
-      {hoveredVideoId && (
+      {hoveredVideoId && !isMobile && (
         <div 
           className="fixed inset-0 z-[30] bg-black pointer-events-none overflow-hidden"
         >
@@ -148,7 +197,7 @@ export default function WorkSection() {
             ref={expandedVideoRef}
             src={videos.find(v => v.id === hoveredVideoId)?.src}
             className="w-full h-full object-cover"
-            style={{ transform: 'scale(1.5)' }}
+            style={{ transform: 'scale(1)' }}
             muted
             loop
             playsInline
@@ -227,6 +276,22 @@ export default function WorkSection() {
             }
           }}
         >
+          {/* Previous Button */}
+          <button
+            onClick={handlePrevProject}
+            className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-[80] text-white text-3xl md:text-4xl hover:text-gray-300 transition-colors p-2 rounded-full bg-black/20 hover:bg-black/40"
+            aria-label="Previous project"
+          >
+            &#x276E;
+          </button>
+          {/* Next Button */}
+          <button
+            onClick={handleNextProject}
+            className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-[80] text-white text-3xl md:text-4xl hover:text-gray-300 transition-colors p-2 rounded-full bg-black/20 hover:bg-black/40"
+            aria-label="Next project"
+          >
+            &#x276F;
+          </button>
           <div 
             className="max-w-7xl w-full h-[90vh] bg-dark-grey rounded-lg overflow-hidden flex flex-col"
             style={{ backgroundColor: 'var(--dark-grey)' }}
@@ -245,7 +310,7 @@ export default function WorkSection() {
               {/* Left Side - Content */}
               <div className="p-8 md:p-12 flex flex-col">
                 <h3 
-                  className="text-3xl md:text-4xl font-bold text-white mb-6"
+                  className="text-3xl md:text-2xl font-bold text-white mb-6"
                   style={{ fontFamily: 'var(--font-akira-expanded)' }}
                 >
                   {videos.find(v => v.id === clickedVideoId)?.title}
@@ -253,7 +318,7 @@ export default function WorkSection() {
                 <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-6">
                   {videos.find(v => v.id === clickedVideoId)?.description}
                 </p>
-                <div className="space-y-4">
+                <div className="space-y-4 mb-8">
                   <div>
                     <h4 className="text-xl font-semibold text-white mb-2">Client</h4>
                     <p className="text-gray-400">{videos.find(v => v.id === clickedVideoId)?.client}</p>
@@ -263,6 +328,29 @@ export default function WorkSection() {
                     <p className="text-gray-400">Animation, Visual Effects, Environment Design</p>
                   </div>
                 </div>
+
+                {/* First Video - Moved to Left Side */}
+                {videos.find(v => v.id === clickedVideoId)?.breakdown[0] && (
+                  <div className="w-full mt-auto">
+                    {videos.find(v => v.id === clickedVideoId)?.breakdown[0].type === "video" ? (
+                      <CustomVideoPlayer
+                        src={videos.find(v => v.id === clickedVideoId)?.breakdown[0].src || ""}
+                        autoPlay={true}
+                        initialVolume={0.2}
+                        loop={true}
+                      />
+                    ) : (
+                      <div className="relative w-full aspect-video">
+                        <Image
+                          src={videos.find(v => v.id === clickedVideoId)?.breakdown[0].src || ""}
+                          alt="Project Main View"
+                          fill
+                          className="rounded-lg object-cover"
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Right Side - Breakdown Media */}
@@ -274,15 +362,14 @@ export default function WorkSection() {
                   Breakdown
                 </h4>
                 <div className="space-y-6">
-                  {videos.find(v => v.id === clickedVideoId)?.breakdown.map((item, index) => (
-                    <div key={index} className="w-full">
+                  {videos.find(v => v.id === clickedVideoId)?.breakdown.slice(1).map((item, index) => (
+                    <div key={index} className="w-120">
                       {item.type === "video" ? (
-                        <video
+                        <CustomVideoPlayer
                           src={item.src}
-                          className="w-full h-auto rounded-lg"
-                          controls
-                          muted
-                          playsInline
+                          autoPlay={true} // Autoplay all videos in breakdown
+                          initialVolume={0} // Mute subsequent videos
+                          loop={true} // Special case: only the first video of project 6 loops
                         />
                       ) : (
                         <div className="relative w-full aspect-video">
@@ -305,4 +392,3 @@ export default function WorkSection() {
     </section>
   );
 }
-

@@ -21,9 +21,9 @@ export default function HomeSection() {
         muted
         playsInline
         className="absolute top-0 left-0 w-full h-full object-cover z-0"
-        style={{ filter: 'blur(4px)', transform: 'scale(1.2)' }}
+        style={{ filter: 'blur(3px)', transform: 'scale(1.2)' }}
       >
-        <source src="/video/mercedes.mp4" type="video/mp4" />
+        <source src="/video/highlight.mp4" type="video/mp4" />
       </video>
 
       {/* Overlay for better text readability */}

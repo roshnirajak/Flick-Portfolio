@@ -28,7 +28,7 @@ const akiraExpanded = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
+  title: "Flick",
   description: "My portfolio website showcasing my work and skills",
 };
 
