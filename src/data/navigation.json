@@ -1,0 +1,29 @@
+{
+  "email": "surya@flickvfx.com",
+  "navLinks": [
+    {
+      "label": "Home",
+      "href": "#home"
+    },
+    {
+      "label": "Work",
+      "href": "#work"
+    },
+    {
+      "label": "About",
+      "href": "/about"
+    },
+    {
+      "label": "Contact",
+      "href": "#contact"
+    }
+  ],
+  "socialLinks": [
+    {
+      "label": "Instagram",
+      "href": "https://www.instagram.com/chilledsprite/",
+      "icon": "instagram"
+    }
+  ]
+}
+

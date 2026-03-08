@@ -1,0 +1,25 @@
+[build]
+  # This is the directory where Netlify looks for your functions
+  functions = "netlify/functions"
+  # This is the standard build command for Vite
+  command = "npm run build"
+  # This is the standard output directory for Vite
+  publish = "dist"
+
+[[redirects]]
+  # This ensures that React Router works correctly when refreshing the page
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Cache headers for video files
+[[headers]]
+  for = "/video/**"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache headers for service worker
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
